@@ -5,24 +5,21 @@
 ## file making
 ##
 
-NAME	= 	my_gl
+LIBNAME = 	libglep.a
 
 CC		=	gcc
 CCP		=	g++
 
 RM		= rm -f
 
-CSRC	=	src/glad.c	                                \
+C_SRC	=	src/glad.c	                                \
 
-CPPSRC	= 	main.cpp	                                \
-                                                        \
-			src/Window/Window.cpp	                    \
+CPP_SRC	=	src/Window/Window.cpp	                    \
 			src/Window/CameraHandling.cpp				\
 														\
 			src/Camera/Camera.cpp						\
 														\
 			src/Materials/Texture.cpp					\
-			src/Materials/Material.cpp					\
                                                         \
 			src/GraphicsPipeline/Shader.cpp	            \
 			src/GraphicsPipeline/GraphicsPipeline.cpp	\
@@ -35,26 +32,29 @@ CPPSRC	= 	main.cpp	                                \
 														\
 			src/Transform/Transform.cpp					\
 
-COBJ   = $(CSRC:.c=.o)
-CPPOBJ = $(CPPSRC:.cpp=.o)
-OBJ = $(COBJ) $(CPPOBJ)
+C_OBJ   = $(C_SRC:.c=.o)
+CPP_OBJ = $(CPP_SRC:.cpp=.o)
+
+ALL_OBJ = $(C_OBJ) $(CPP_OBJ)
 
 INCLUDE 	= 	-I./include -I./interfaces
 LIBFLAG    	= 	-lGL -lglfw -ldl
 WARNINGFLAG = 	-Wall -Wextra -Werror -g3
-CPPFLAGS 	+= 	$(INCLUDE) $(LIBFLAG) $(WARNINGFLAG)
 
+CFLAGS 		= 	$(WARNINGFLAG) $(INCLUDE)
+CPPFLAGS 	= 	$(WARNINGFLAG) $(INCLUDE) $(LIBFLAG)
 
-all:  $(OBJ) compile
+all: lib
+	$(CCP) -o example main.cpp $(CFLAGS) $(CPPFLAGS) -L. -lglep
 
-compile:
-	$(CCP) $(OBJ) -o $(NAME) $(INCLUDE) $(LIBFLAG) $(WARNINGFLAG)
-
-clean:
-	@$(RM) $(OBJ)
-
-fclean: clean
-	@$(RM) $(NAME)
-	@$(RM) $(OBJ)
+lib: $(ALL_OBJ)
+	ar rc $(LIBNAME) $(ALL_OBJ)
 
 re: fclean all
+
+clean:
+	rm -f $(ALL_OBJ)
+
+fclean: clean
+	rm -f $(LIBNAME)
+	rm -f example

@@ -100,11 +100,11 @@ void setCallbacks(Glep::Window& window, Glep::Camera& camera) {
     });
 
     window.getKeyboardHandler().setKeyRepeatCallback(GLFW_KEY_SPACE, [&camera]() {
-        camera.localTranslate(glm::vec3(0.0f, -0.1f, 0.0f));
+        camera.globalTranslate(glm::vec3(0.0f, -0.1f, 0.0f));
     });
 
     window.getKeyboardHandler().setKeyRepeatCallback(GLFW_KEY_LEFT_SHIFT, [&camera]() {
-        camera.localTranslate(glm::vec3(0.0f, 0.1f, 0.0f));
+        camera.globalTranslate(glm::vec3(0.0f, 0.1f, 0.0f));
     });
 
     window.getMouseHandler().setMouseMovedCallback([&camera, &window](const glm::vec2 &pos) {
