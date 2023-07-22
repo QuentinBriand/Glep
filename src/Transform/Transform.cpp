@@ -28,7 +28,9 @@ namespace Glep
 
     void Transform::globalTranslate(const glm::vec3 &translation)
     {
-        _worldPosition += translation;
+        _worldPosition.x += translation.x;
+        _worldPosition.y += translation.y * -1;
+        _worldPosition.z += translation.z;
     }
 
     void Transform::rotate(const glm::vec3 &rotation)
