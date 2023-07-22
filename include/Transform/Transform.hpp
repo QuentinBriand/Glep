@@ -8,6 +8,8 @@
 #ifndef TRANSFORM_HPP_
     #define TRANSFORM_HPP_
 
+    #include <iostream>
+
     #include <glm/glm.hpp>
     #include <glm/gtc/type_ptr.hpp>
     #include <glm/gtc/quaternion.hpp>
@@ -29,6 +31,8 @@ namespace Glep
             void globalTranslate(const glm::vec3 &translation);
             void rotate(const glm::vec3 &rotation);
             void scale(const glm::vec3 &scale);
+
+            void lookAt(const glm::vec3 &target);
 
             const glm::vec3 &getLocalPosition() const;
             const glm::vec3 getLocalRotation() const;

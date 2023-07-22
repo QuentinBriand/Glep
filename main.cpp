@@ -5,9 +5,7 @@
 ** main
 */
 
-#include "Window/Window.hpp"
-#include "GraphicsPipeline/GraphicsPipeline.hpp"
-#include "Mesh/Mesh.hpp"
+#include "example.hpp"
 
 #include <chrono>
 #include <thread>
@@ -18,64 +16,6 @@ Glep::GraphicsPipeline test(void) {
     auto fragmentShader = Glep::Shader::loadFromFile("examples/shaders/default.frag", Glep::FRAGMENT_SHADER);
     fragmentShader.compile();
     return Glep::GraphicsPipeline (vertexShader, fragmentShader);
-}
-
-Glep::Mesh cubeMeshGen()
-{
-    auto cubeMesh = Glep::Mesh();
-    cubeMesh.setVertices({
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-        Glep::Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f))
-    });
-    cubeMesh.setIndices({
-        0, 1, 2,
-        3, 4, 5,
-        6, 7, 8,
-        9, 10, 11,
-        12, 13, 14,
-        15, 16, 17,
-        18, 19, 20,
-        21, 22, 23,
-        24, 25, 26,
-        27, 28, 29,
-        30, 31, 32,
-        33, 34, 35
-    });
-    return cubeMesh;
 }
 
 void setCallbacks(Glep::Window& window, Glep::Camera& camera) {
@@ -99,11 +39,11 @@ void setCallbacks(Glep::Window& window, Glep::Camera& camera) {
         camera.localTranslate(glm::vec3(0.1f, 0.0f, 0.0f));
     });
 
-    window.getKeyboardHandler().setKeyRepeatCallback(GLFW_KEY_SPACE, [&camera]() {
+    window.getKeyboardHandler().setKeyRepeatCallback(GLFW_KEY_LEFT_SHIFT, [&camera]() {
         camera.globalTranslate(glm::vec3(0.0f, -0.1f, 0.0f));
     });
 
-    window.getKeyboardHandler().setKeyRepeatCallback(GLFW_KEY_LEFT_SHIFT, [&camera]() {
+    window.getKeyboardHandler().setKeyRepeatCallback(GLFW_KEY_SPACE, [&camera]() {
         camera.globalTranslate(glm::vec3(0.0f, 0.1f, 0.0f));
     });
 
@@ -130,15 +70,17 @@ int main(void)
 
     auto camera = window.createCamera(45.0f);
     window.setActiveCamera(camera);
+    camera.globalTranslate(glm::vec3(0.0f, 2.0f, -7.5f));
     setCallbacks(window, camera);
 
     auto texture = Glep::Texture::loadFromFile("assets/rickroll.jpg", Glep::TextureRepetition::REPEAT);
 
     auto graphicsPipeline = test();
-    auto cubeMesh = cubeMeshGen();
-    cubeMesh.setTexture(texture);
-    cubeMesh.setLocalPosition(glm::vec3(0.0f, 0.0f, -3.0f));
-
+    auto plane = generatePlane();
+    auto pyramid = generatePyramid();
+    pyramid.setTexture(texture);
+    plane.setTexture(texture);
+    pyramid.localTranslate(glm::vec3(0.0f, 1.0001f, 0.0f));
 
     while(!window.shouldClose())
     {
@@ -146,7 +88,8 @@ int main(void)
         window.pollKeyboardEvents();
         window.clear(glm::vec4(0.2f, 0.3f, 0.3f, 1.0f));
 
-        window.draw(cubeMesh, graphicsPipeline);
+        window.draw(plane, graphicsPipeline);
+        window.draw(pyramid, graphicsPipeline);
 
         window.display();
     }
