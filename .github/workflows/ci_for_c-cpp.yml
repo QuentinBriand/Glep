@@ -60,6 +60,7 @@ jobs:
                 set -e
                 set -o pipefail
 
+                sudo apt install libglfw3-dev
                 sudo apt install libglm-dev
 
                 make
