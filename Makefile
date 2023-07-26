@@ -5,56 +5,54 @@
 ## file making
 ##
 
-NAME	= 	my_gl
+LIBNAME = 	libglep.a
 
 CC		=	gcc
 CCP		=	g++
 
 RM		= rm -f
 
-CSRC	=	src/glad.c	                                \
+C_SRC	=	external/glad/glad.c							\
 
-CPPSRC	= 	main.cpp	                                \
-                                                        \
-			src/Window/Window.cpp	                    \
-			src/Window/CameraHandling.cpp				\
-														\
-			src/Camera/Camera.cpp						\
-														\
-			src/Materials/Texture.cpp					\
-			src/Materials/Material.cpp					\
-                                                        \
-			src/GraphicsPipeline/Shader.cpp	            \
-			src/GraphicsPipeline/GraphicsPipeline.cpp	\
-			                                            \
-            src/Input/KeyboardHandler.cpp		        \
-			src/Input/MouseHandler.cpp		            \
-                                                        \
-			src/Mesh/Mesh.cpp	                        \
-			src/Mesh/Vertex.cpp		                    \
-														\
-			src/Transform/Transform.cpp					\
+CPP_SRC	=	libglep/Window.cpp								\
+			libglep/Graphics/PhongMaterial.cpp				\
+			libglep/Graphics/PointLight.cpp					\
+			libglep/Graphics/Texture.cpp					\
+															\
+			libglep/GraphicsPipeline/GraphicsPipeline.cpp	\
+			libglep/GraphicsPipeline/Shader.cpp				\
+															\
+			libglep/Input/KeyboardHandler.cpp				\
+			libglep/Input/MouseHandler.cpp					\
+															\
+			libglep/Model/Mesh.cpp							\
+			libglep/Model/Vertex.cpp						\
+															\
+			libglep/Camera.cpp								\
+			libglep/CameraHandling.cpp						\
+			libglep/Transform.cpp							\
 
-COBJ   = $(CSRC:.c=.o)
-CPPOBJ = $(CPPSRC:.cpp=.o)
-OBJ = $(COBJ) $(CPPOBJ)
+C_OBJ   = $(C_SRC:.c=.o)
+CPP_OBJ = $(CPP_SRC:.cpp=.o)
 
-INCLUDE 	= 	-I./include -I./interfaces
+ALL_OBJ = $(C_OBJ) $(CPP_OBJ)
+
+INCLUDE 	= 	-I./interfaces -I./external -I./libglep
 LIBFLAG    	= 	-lGL -lglfw -ldl
-WARNINGFLAG = 	-Wall -Wextra -Werror -g3
-CPPFLAGS 	+= 	$(INCLUDE) $(LIBFLAG) $(WARNINGFLAG)
+WARNINGFLAG = 	-Wall -Wextra -Werror
 
+CFLAGS 		+= 	$(INCLUDE) $(WARNINGFLAG)
+CPPFLAGS 	= 	$(INCLUDE) $(LIBFLAG) $(WARNINGFLAG)
 
-all:  $(OBJ) compile
+all: $(EXAMPLE_OBJ) lib
 
-compile:
-	$(CCP) $(OBJ) -o $(NAME) $(INCLUDE) $(LIBFLAG) $(WARNINGFLAG)
-
-clean:
-	@$(RM) $(OBJ)
-
-fclean: clean
-	@$(RM) $(NAME)
-	@$(RM) $(OBJ)
+lib: $(ALL_OBJ)
+	ar rc $(LIBNAME) $(ALL_OBJ)
 
 re: fclean all
+
+clean:
+	rm -f $(ALL_OBJ) $(EXAMPLE_OBJ)
+
+fclean: clean
+	rm -f $(LIBNAME)

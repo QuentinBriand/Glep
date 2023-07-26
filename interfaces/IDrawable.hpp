@@ -16,8 +16,6 @@ namespace Glep
             ~IDrawable() = default;
 
             virtual void draw(const GraphicsPipeline &pipeline) const = 0;
-        protected:
-        private:
     };
 } // namespace Glep
 
