@@ -60,4 +60,6 @@ jobs:
                 set -e
                 set -o pipefail
 
+                sudo apt install libglm-dev
+
                 make
