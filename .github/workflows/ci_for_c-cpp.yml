@@ -1,11 +1,63 @@
 name: C/C++ CI
 
 on:
-  push:
-    branches-ignore:
-      - 'ci-ignore**'
-  pull_request:
-    branches-ignore:
-      - 'ci-ignore**'
-      
+    push:
+        branches-ignore:
+            - 'ci-ignore**'
+    pull_request:
+        branches-ignore:
+            - 'ci-ignore**'
+
 jobs:
+    repository_cleanliness:
+        runs-on: ubuntu-latest
+        name: Checks for repository cleanliness (no unwanted files/folders or bad placement of files/folders)
+        steps:
+            - run: echo "$github.event.name"
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+            - run: |
+                #!/bin/bash
+                set -e
+                set -o pipefail
+
+                if [[ $(git ls-files --exclude-standard --others) ]]; then
+                    echo "Unwanted files/folders found:"
+                    git ls-files --exclude-standard --others
+                    exit 1
+                fi
+                folder_list=(
+                    "external/"
+                    "interfaces/"
+                    "libglep/"
+                    "tests/"
+                    "docs/"
+                )
+                for folder in $(ls -d */); do
+                    if [[ ! " ${folder_list[@]} " =~ " ${folder} " ]]; then
+                        echo "Unwanted folder found: ${folder}"
+                        exit 1
+                    fi
+                done
+
+                for file in $(ls interfaces/); do
+                    if [[ ! $file =~ .*\.hpp ]]; then
+                        echo "Unwanted file found in interfaces folder: ${file}"
+                        exit 1
+                    fi
+                done
+    repository_compilation:
+        runs-on: ubuntu-latest
+        name: Checks for repository compilation (compiles the project with make)
+        steps:
+            - run: echo "$github.event.name"
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+            - run: |
+                #!/bin/bash
+                set -e
+                set -o pipefail
+
+                make
