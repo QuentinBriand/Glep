@@ -33,10 +33,18 @@ jobs:
                     "libglep/"
                     "tests/"
                     "docs/"
+                    "shaders/"
                 )
                 for folder in $(ls -d */); do
                     if [[ ! " ${folder_list[@]} " =~ " ${folder} " ]]; then
                         echo "Unwanted folder found: ${folder}"
+                        exit 1
+                    fi
+                done
+
+                for file in $(ls shaders/); do
+                    if [[ ! $file =~ .*\.vert ]] && [[ ! $file =~ .*\.frag ]]; then
+                        echo "Unwanted file found in shaders folder: ${file}"
                         exit 1
                     fi
                 done
