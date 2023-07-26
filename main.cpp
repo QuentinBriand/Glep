@@ -70,10 +70,10 @@ int main(void)
 
     auto camera = window.createCamera(45.0f);
     window.setActiveCamera(camera);
-    camera.globalTranslate(glm::vec3(0.0f, 2.0f, -7.5f));
+    // camera.globalTranslate(glm::vec3(0.0f, -2.0f, -7.5f));
     setCallbacks(window, camera);
 
-    auto texture = Glep::Texture::loadFromFile("assets/rickroll.jpg", Glep::TextureRepetition::REPEAT);
+    auto texture = Glep::Texture::loadFromFile("assets/rickroll.jpg", Glep::TextureRepetition::MIRRORED_REPEAT);
 
     auto graphicsPipeline = test();
     auto plane = generatePlane();
@@ -87,6 +87,8 @@ int main(void)
         window.pollEvents();
         window.pollKeyboardEvents();
         window.clear(glm::vec4(0.2f, 0.3f, 0.3f, 1.0f));
+
+        pyramid.globalTranslate(glm::vec3(0.0f, 0.001f, 0.0f));
 
         window.draw(plane, graphicsPipeline);
         window.draw(pyramid, graphicsPipeline);

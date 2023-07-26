@@ -57,7 +57,7 @@ lib: $(ALL_OBJ)
 re: fclean all
 
 clean:
-	rm -f $(ALL_OBJ)
+	rm -f $(ALL_OBJ) $(EXAMPLE_OBJ)
 
 fclean: clean
 	rm -f $(LIBNAME)

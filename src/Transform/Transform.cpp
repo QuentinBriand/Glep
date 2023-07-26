@@ -29,7 +29,7 @@ namespace Glep
     void Transform::globalTranslate(const glm::vec3 &translation)
     {
         _worldPosition.x += translation.x;
-        _worldPosition.y += translation.y * -1;
+        _worldPosition.y += translation.y * _YModifier;
         _worldPosition.z += translation.z;
     }
 

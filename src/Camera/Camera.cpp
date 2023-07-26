@@ -13,6 +13,7 @@ namespace Glep
         _fov = fov;
         _near = near;
         _far = far;
+        _YModifier = -1;
     }
 
     void Camera::updateProjectionMatrix(void)

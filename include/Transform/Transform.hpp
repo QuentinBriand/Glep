@@ -32,8 +32,6 @@ namespace Glep
             void rotate(const glm::vec3 &rotation);
             void scale(const glm::vec3 &scale);
 
-            void lookAt(const glm::vec3 &target);
-
             const glm::vec3 &getLocalPosition() const;
             const glm::vec3 getLocalRotation() const;
             const glm::vec3 &getLocalScale() const;
@@ -45,6 +43,8 @@ namespace Glep
             const glm::mat4 &getTransformationMatrix() const;
         protected:
         private:
+            friend class Camera;
+            char _YModifier = 1;
             void updateModelOrientation() const;
 
             glm::vec3 _worldPosition = glm::vec3(0.0f);
