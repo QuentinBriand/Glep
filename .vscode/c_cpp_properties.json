@@ -3,15 +3,15 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/libglep",
+                "${workspaceFolder}/interfaces",
+                "${workspaceFolder}/external"
             ],
             "defines": [],
-            "compilerPath": "/usr/lib64/ccache/gcc",
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "linux-gcc-x64",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4
