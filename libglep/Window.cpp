@@ -5,7 +5,7 @@
 ** window
 */
 
-#include "Window.hpp"
+#include <Window.hpp>
 
 namespace Glep
 {
