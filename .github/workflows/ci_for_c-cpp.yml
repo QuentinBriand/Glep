@@ -63,4 +63,8 @@ jobs:
                 sudo apt install libglfw3-dev
                 sudo apt install libglm-dev
 
-                make
+                # Check if the .a file was created
+                if [[ ! -f libglep.a ]]; then
+                    echo "libglep.a not found"
+                    exit 1
+                fi
