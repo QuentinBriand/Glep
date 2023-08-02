@@ -9,29 +9,40 @@
 
 namespace Glep
 {
-
-    PointLight::PointLight(const glm::vec3 &color, const float &intensity) : _color(color), _intensity(intensity)
+    PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular)
     {
+        _ambient = ambient;
+        _diffuse = diffuse;
+        _specular = specular;
     }
 
-    void PointLight::setColor(const glm::vec3 &color)
+    void PointLight::setAmbientColor(const glm::vec3 &ambient)
     {
-        _color = color;
+        _ambient = ambient;
     }
 
-    void PointLight::setIntensity(const float &intensity)
+    void PointLight::setDiffuseColor(const glm::vec3 &diffuse)
     {
-        _intensity = intensity;
+        _diffuse = diffuse;
     }
 
-    const glm::vec3 &PointLight::getColor(void) const
+    void PointLight::setSpecularColor(const glm::vec3 &specular)
     {
-        return _color;
+        _specular = specular;
     }
 
-    const float &PointLight::getIntensity(void) const
+    const glm::vec3 &PointLight::getAmbientColor(void) const
     {
-        return _intensity;
+        return _ambient;
     }
 
+    const glm::vec3 &PointLight::getDiffuseColor(void) const
+    {
+        return _diffuse;
+    }
+
+    const glm::vec3 &PointLight::getSpecularColor(void) const
+    {
+        return _specular;
+    }
 } // namespace Glep

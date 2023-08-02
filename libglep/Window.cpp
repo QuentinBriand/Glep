@@ -166,8 +166,11 @@ namespace Glep
             pipeline.use();
         auto &cam = _activeCamera.value().get();
         auto &lights = _lightHandler.getPointLights();
-        pipeline.setUniform("light.color", lights.front().get().getColor());
-        pipeline.setUniform("light.position", lights.front().get().getLocalPosition());
+        auto &test_light = lights.front().get();
+        pipeline.setUniform("light.ambient", test_light.getAmbientColor());
+        pipeline.setUniform("light.diffuse", test_light.getDiffuseColor());
+        pipeline.setUniform("light.specular", test_light.getSpecularColor());
+        pipeline.setUniform("light.position", test_light.getLocalPosition());
 
         pipeline.setUniform("view", cam.getTransformationMatrix());
         pipeline.setUniform("projection", cam.getProjectionMatrix());
