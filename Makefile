@@ -15,10 +15,10 @@ RM		= rm -f
 C_SRC	=	external/glad/glad.c							\
 
 CPP_SRC	=	libglep/Window.cpp								\
-			libglep/Graphics/PhongMaterial.cpp				\
-			libglep/Graphics/PointLight.cpp					\
 			libglep/Graphics/Texture.cpp					\
 			libglep/Graphics/Material.cpp					\
+															\
+			libglep/Graphics/Lights/PointLight.cpp			\
 															\
 			libglep/GraphicsPipeline/GraphicsPipeline.cpp	\
 			libglep/GraphicsPipeline/Shader.cpp				\

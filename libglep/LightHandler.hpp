@@ -10,7 +10,7 @@
 
     #include <list>
     #include <functional>
-    #include <Graphics/PointLight.hpp>
+    #include <Graphics/Lights/PointLight.hpp>
 
 namespace Glep
 {
