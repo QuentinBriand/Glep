@@ -66,7 +66,6 @@ namespace Glep
         GLint location = glGetUniformLocation(_id, name.c_str());
         if (location == -1)
             throw std::runtime_error("Uniform " + name + " not found");
-        glUseProgram(_id);
         glUniform1i(location, value);
     }
 
@@ -75,7 +74,6 @@ namespace Glep
         GLint location = glGetUniformLocation(_id, name.c_str());
         if (location == -1)
             throw std::runtime_error("Uniform " + name + " not found");
-        glUseProgram(_id);
         glUniform1f(location, value);
     }
 
@@ -84,7 +82,6 @@ namespace Glep
         GLint location = glGetUniformLocation(_id, name.c_str());
         if (location == -1)
             throw std::runtime_error("Uniform " + name + " not found");
-        glUseProgram(_id);
         glUniform2f(location, value.x, value.y);
     }
 
@@ -93,7 +90,6 @@ namespace Glep
         GLint location = glGetUniformLocation(_id, name.c_str());
         if (location == -1)
             throw std::runtime_error("Uniform " + name + " not found");
-        glUseProgram(_id);
         glUniform3f(location, value.x, value.y, value.z);
     }
 
@@ -102,7 +98,6 @@ namespace Glep
         GLint location = glGetUniformLocation(_id, name.c_str());
         if (location == -1)
             throw std::runtime_error("Uniform " + name + " not found");
-        glUseProgram(_id);
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
     }
 

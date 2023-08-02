@@ -60,13 +60,13 @@ namespace Glep
             Window *w = static_cast<Window *>(glfwGetWindowUserPointer(window));
             w->setViewport(glm::ivec4(0, 0, width, height));
         });
-        glfwSetCursorPosCallback(_window, [](GLFWwindow *window, double xpos, double ypos) {
-            Window *w = static_cast<Window *>(glfwGetWindowUserPointer(window));
-            w->getMouseHandler().updateMousePos(xpos, ypos);
-        });
         glfwSetCursorEnterCallback(_window, [](GLFWwindow *window, int entered) {
             Window *w = static_cast<Window *>(glfwGetWindowUserPointer(window));
             w->getMouseHandler().updateMouseEnter(entered);
+        });
+        glfwSetCursorPosCallback(_window, [](GLFWwindow *window, double xpos, double ypos) {
+            Window *w = static_cast<Window *>(glfwGetWindowUserPointer(window));
+            w->getMouseHandler().updateMousePos(xpos, ypos);
         });
         glfwSetMouseButtonCallback(_window, [](GLFWwindow *window, int button, int action, int mods) {
             Window *w = static_cast<Window *>(glfwGetWindowUserPointer(window));

@@ -49,9 +49,10 @@ namespace Glep
                 const FilterLogic &zoomOutLogic = DEFAULT_TEXTURE_FILTER_LOGIC);
             ~Texture();
 
-            int getWidth() const { return this->_width; }
-            int getHeight() const { return this->_height; }
-            int getNbChannels() const { return this->_nbChannels; }
+            const int &getWidth() const { return this->_width; }
+            const int &getHeight() const { return this->_height; }
+            const int &getNbChannels() const { return this->_nbChannels; }
+            const unsigned int &getId() const { return this->_id; }
             void use() const { glBindTexture(GL_TEXTURE_2D, this->_id); }
         private:
             unsigned int _id;

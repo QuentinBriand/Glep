@@ -38,3 +38,4 @@ example.hpp
 main.cpp
 scene.cpp
 *.jpg
+vgcore.*

@@ -110,12 +110,7 @@ namespace Glep
         _displayMode = displayMode;
     }
 
-    void Mesh::setTexture(const Texture &texture)
-    {
-        _texture = texture;
-    }
-
-    void Mesh::setMaterial(const Material &material)
+    void Mesh::setMaterial(Material &material)
     {
         _material = material;
     }
@@ -137,19 +132,38 @@ namespace Glep
 
     void Mesh::draw(const GraphicsPipeline &pipeline) const
     {
+        pipeline.use();
         pipeline.setUniform("model", getTransformationMatrix());
-        if (_texture.has_value()) {
-            _texture.value().use();
-        }
         if (_material.has_value()) {
-            auto matval = _material.value();
-            pipeline.setUniform("material.ambient", matval.getAmbientColor());
+            auto &matval = _material.value().get();
+            auto &textureFlags = matval.getTextureFlags();
+            if (textureFlags & Material::TextureFlag::DIFFUSE) {
+                auto &diffuse = matval.getDiffuseTexture();
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, diffuse.getId());
+                pipeline.setUniform("material.diffuseMap", 0);
+            }
+            if (textureFlags & Material::TextureFlag::SPECULAR) {
+                auto &specular = matval.getSpecularTexture();
+                glActiveTexture(GL_TEXTURE1);
+                glBindTexture(GL_TEXTURE_2D, specular.getId());
+                pipeline.setUniform("material.specularMap", 1);
+            }
+            if (textureFlags & Material::TextureFlag::EMISSION) {
+                auto &emission = matval.getEmissionTexture();
+                glActiveTexture(GL_TEXTURE2);
+                glBindTexture(GL_TEXTURE_2D, emission.getId());
+                pipeline.setUniform("material.emissiveMap", 2);
+            }
+            pipeline.setUniform("material.emissiveStrength", matval.getEmissiveStrength());
+            pipeline.setUniform("material.emissive", matval.getEmissionColor());
             pipeline.setUniform("material.diffuse", matval.getDiffuseColor());
             pipeline.setUniform("material.specular", matval.getSpecularColor());
             pipeline.setUniform("material.shininess", matval.getShininess());
+            pipeline.setUniform("material.textureFlag", (int)textureFlags);
         }
         glBindVertexArray(_VAOId);
-        glPolygonMode(GL_FRONT_AND_BACK, _displayMode);
+        glPolygonMode(GL_FRONT, _displayMode);
         glDrawElements(_drawMode, _indices.size(), GL_UNSIGNED_INT, 0);
     }
 } // namespace Glep

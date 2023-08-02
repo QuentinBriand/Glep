@@ -60,7 +60,7 @@ namespace Glep
             const unsigned int &getEBOId() const;
 
             void setTexture(const Texture &texture);
-            void setMaterial(const Material &material);
+            void setMaterial(Material &material);
             void setDrawMode(const DrawMode &drawMode);
             void setDisplayMode(const DisplayMode &displayMode);
 
@@ -70,8 +70,7 @@ namespace Glep
             std::vector<float> _vertices;
             std::vector<unsigned int> _indices;
 
-            std::optional<Texture> _texture = std::nullopt;
-            std::optional<Material> _material = std::nullopt;
+            std::optional<std::reference_wrapper<Material>> _material = std::nullopt;
 
             unsigned int _VAOId;
             unsigned int _VBOId;

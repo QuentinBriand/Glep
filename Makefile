@@ -44,8 +44,8 @@ INCLUDE 	= 	-I./interfaces -I./external -I./libglep
 LIBFLAG    	= 	-lGL -lglfw -ldl
 WARNINGFLAG = 	-Wall -Wextra -Werror
 
-CFLAGS 		+= 	$(INCLUDE) $(WARNINGFLAG)
-CPPFLAGS 	= 	$(INCLUDE) $(LIBFLAG) $(WARNINGFLAG)
+CFLAGS 		+= 	$(INCLUDE) $(WARNINGFLAG) -g3
+CPPFLAGS 	= 	$(INCLUDE) $(LIBFLAG) $(WARNINGFLAG) -g3
 
 all: $(EXAMPLE_OBJ) lib
 

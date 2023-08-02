@@ -78,7 +78,7 @@ namespace Glep
             static bool _isInit;
             bool _shouldClose;
             double _lastFrameTime;
-            double _deltaTime;
+            double _deltaTime = 0.0f;
 
             int _frameRateLimit = 60;
 

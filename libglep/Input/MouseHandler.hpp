@@ -18,8 +18,7 @@
 
 namespace Glep
 {
-    using MMCallbackFunction = std::function<void(const glm::vec2 &)>;
-    class Window;
+    using MMCallbackFunction = std::function<void(glm::vec2)>;
     enum CursorMode {
         NORMAL = GLFW_CURSOR_NORMAL,
         HIDDEN = GLFW_CURSOR_HIDDEN,
@@ -92,7 +91,7 @@ namespace Glep
         private:
             bool _rawInput = false;
             bool _canUseRawInput = glfwRawMouseMotionSupported();
-            bool _mouseIn = true;
+            bool _mouseIn = false;
             int _lastMouseModifiers = 0;
 
             std::optional<std::function<void(const double&, const double&)>> _mouseScrollCallback = std::nullopt;
@@ -103,11 +102,8 @@ namespace Glep
             std::optional<std::function<void()>> _mouseEnterCallback = std::nullopt;
             std::optional<std::function<void()>> _mouseLeaveCallback = std::nullopt;
 
-
             CursorMode _cursorMode = NORMAL;
-            glm::vec2 _lastMousePos;
-
-            friend Window;
+            glm::vec2 _lastMousePos = glm::vec2(0.0f, 0.0f);
     };
 } // namespace Glep
 
