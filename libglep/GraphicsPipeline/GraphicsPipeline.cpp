@@ -61,6 +61,15 @@ namespace Glep
         glUseProgram(0);
     }
 
+    void GraphicsPipeline::setUniform(const std::string &name, const int &value) const
+    {
+        GLint location = glGetUniformLocation(_id, name.c_str());
+        if (location == -1)
+            throw std::runtime_error("Uniform " + name + " not found");
+        glUseProgram(_id);
+        glUniform1i(location, value);
+    }
+
     void GraphicsPipeline::setUniform(const std::string &name, const float &value) const
     {
         GLint location = glGetUniformLocation(_id, name.c_str());
@@ -77,6 +86,15 @@ namespace Glep
             throw std::runtime_error("Uniform " + name + " not found");
         glUseProgram(_id);
         glUniform2f(location, value.x, value.y);
+    }
+
+    void GraphicsPipeline::setUniform(const std::string &name, const glm::vec3 &value) const
+    {
+        GLint location = glGetUniformLocation(_id, name.c_str());
+        if (location == -1)
+            throw std::runtime_error("Uniform " + name + " not found");
+        glUseProgram(_id);
+        glUniform3f(location, value.x, value.y, value.z);
     }
 
     void GraphicsPipeline::setUniform(const std::string &name, const glm::mat4 &value) const

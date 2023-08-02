@@ -33,3 +33,8 @@
 example
 
 .vscode/
+
+example.hpp
+main.cpp
+scene.cpp
+*.jpg

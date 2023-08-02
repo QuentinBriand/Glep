@@ -5,7 +5,7 @@
 ** Camera
 */
 
-#include <Camera.hpp>
+#include <Camera/Camera.hpp>
 
 namespace Glep
 {
@@ -13,7 +13,6 @@ namespace Glep
         _fov = fov;
         _near = near;
         _far = far;
-        _YModifier = -1;
     }
 
     void Camera::updateProjectionMatrix(void)
@@ -42,4 +41,12 @@ namespace Glep
         return _projectionMatrix;
     }
 
+    const glm::mat4 &Camera::getTransformationMatrix() const
+    {
+        _worldTransformationMatrix = glm::mat4(1.0f);
+        _worldTransformationMatrix *= glm::toMat4(_modelOrientation);
+        _worldTransformationMatrix = glm::translate(_worldTransformationMatrix, -_worldPosition);
+        _worldTransformationMatrix = glm::scale(_worldTransformationMatrix, _worldScale);
+        return _worldTransformationMatrix;
+    }
 } // namespace Glep

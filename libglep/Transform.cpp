@@ -14,6 +14,12 @@ namespace Glep
         _worldPosition = position;
     }
 
+    void Transform::setLocalRotation(const glm::vec3 &rotation)
+    {
+        _localRotation = rotation;
+        updateModelOrientation();
+    }
+
     void Transform::setLocalScale(const glm::vec3 &scale)
     {
         _worldScale = scale;
@@ -29,7 +35,7 @@ namespace Glep
     void Transform::globalTranslate(const glm::vec3 &translation)
     {
         _worldPosition.x += translation.x;
-        _worldPosition.y += translation.y * _YModifier;
+        _worldPosition.y += translation.y;
         _worldPosition.z += translation.z;
     }
 
@@ -87,8 +93,8 @@ namespace Glep
     const glm::mat4 &Transform::getTransformationMatrix() const
     {
         _worldTransformationMatrix = glm::mat4(1.0f);
-        _worldTransformationMatrix *= glm::toMat4(_modelOrientation);
         _worldTransformationMatrix = glm::translate(_worldTransformationMatrix, _worldPosition);
+        _worldTransformationMatrix *= glm::toMat4(_modelOrientation);
         _worldTransformationMatrix = glm::scale(_worldTransformationMatrix, _worldScale);
         return _worldTransformationMatrix;
     }

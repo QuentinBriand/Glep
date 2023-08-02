@@ -18,6 +18,7 @@ CPP_SRC	=	libglep/Window.cpp								\
 			libglep/Graphics/PhongMaterial.cpp				\
 			libglep/Graphics/PointLight.cpp					\
 			libglep/Graphics/Texture.cpp					\
+			libglep/Graphics/Material.cpp					\
 															\
 			libglep/GraphicsPipeline/GraphicsPipeline.cpp	\
 			libglep/GraphicsPipeline/Shader.cpp				\
@@ -28,8 +29,10 @@ CPP_SRC	=	libglep/Window.cpp								\
 			libglep/Model/Mesh.cpp							\
 			libglep/Model/Vertex.cpp						\
 															\
-			libglep/Camera.cpp								\
+			libglep/Camera/Camera.cpp						\
+															\
 			libglep/CameraHandling.cpp						\
+			libglep/LightHandler.cpp						\
 			libglep/Transform.cpp							\
 
 C_OBJ   = $(C_SRC:.c=.o)

@@ -44,10 +44,9 @@ namespace Glep
         protected:
         private:
             friend class Camera;
-            char _YModifier = 1;
             void updateModelOrientation() const;
 
-            glm::vec3 _worldPosition = glm::vec3(0.0f);
+            mutable glm::vec3 _worldPosition = glm::vec3(0.0f);
             glm::vec3 _worldScale = glm::vec3(1.0f);
 
             glm::vec3 _localRotation = glm::vec3(0.0f);

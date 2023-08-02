@@ -113,6 +113,11 @@ namespace Glep
         return _mouseHandler;
     }
 
+    LightHandler &Window::getLightHandler(void)
+    {
+        return _lightHandler;
+    }
+
     Camera &Window::getActiveCamera(void)
     {
         if (!_activeCamera.has_value())
@@ -160,8 +165,13 @@ namespace Glep
         if (currentProgram != pipeline.getId())
             pipeline.use();
         auto &cam = _activeCamera.value().get();
+        auto &lights = _lightHandler.getPointLights();
+        pipeline.setUniform("light.color", lights.front().get().getColor());
+        pipeline.setUniform("light.position", lights.front().get().getLocalPosition());
+
         pipeline.setUniform("view", cam.getTransformationMatrix());
         pipeline.setUniform("projection", cam.getProjectionMatrix());
+        pipeline.setUniform("viewPos", cam.getLocalPosition());
         drawable.draw(pipeline);
     }
 

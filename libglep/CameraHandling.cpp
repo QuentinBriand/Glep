@@ -9,7 +9,7 @@
 
 namespace Glep
 {
-    Camera Window::createCamera(float fov, float nearPlane, float farPlane)
+    Camera Window::createCamera(const float &fov, const float &nearPlane, const float &farPlane)
     {
         return Camera(_viewport, fov, nearPlane, farPlane);
     }

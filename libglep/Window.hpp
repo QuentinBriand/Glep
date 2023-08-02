@@ -12,14 +12,16 @@
     #include <glad/glad.h>
     #include <GLFW/glfw3.h>
 
+    #include <list>
     #include <memory>
     #include <thread>
     #include <optional>
     #include <iostream>
     #include <stdexcept>
 
-    #include <Camera.hpp>
+    #include <Camera/Camera.hpp>
     #include <IDrawable.hpp>
+    #include <LightHandler.hpp>
     #include <Input/MouseHandler.hpp>
     #include <Input/KeyboardHandler.hpp>
     #include <GraphicsPipeline/GraphicsPipeline.hpp>
@@ -43,6 +45,7 @@ namespace Glep
 
             KeyboardHandler &getKeyboardHandler(void);
             MouseHandler &getMouseHandler(void);
+            LightHandler &getLightHandler(void);
             Camera &getActiveCamera(void);
 
             glm::ivec4 &getViewport(void);
@@ -62,7 +65,7 @@ namespace Glep
             int getFPS(void) const;
             void setFPSLimit(int limit);
 
-            Camera createCamera(float fov, float nearPlane = 0.1f, float farPlane = 100.0f);
+            Camera createCamera(const float &fov, const float &nearPlane = 0.1f, const float &farPlane = 100.0f);
             void setActiveCamera(Camera &camera);
 
             void draw(const IDrawable &drawable, const GraphicsPipeline &pipeline) const;
@@ -82,6 +85,7 @@ namespace Glep
             glm::ivec4 _viewport;
             KeyboardHandler _keyboardHandler;
             MouseHandler _mouseHandler;
+            LightHandler _lightHandler;
     };
 } // namespace GLep
 

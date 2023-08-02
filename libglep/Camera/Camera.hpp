@@ -26,6 +26,7 @@ namespace Glep
             void setFar(float far);
 
             glm::mat4 &getProjectionMatrix(void);
+            const glm::mat4 &getTransformationMatrix() const;
         protected:
         private:
             Camera(glm::ivec4 &viewport, float fov, float near, float far);
@@ -37,7 +38,6 @@ namespace Glep
             float _far;
 
             glm::mat4 _projectionMatrix;
-
     };
 } // namespace Glep
 

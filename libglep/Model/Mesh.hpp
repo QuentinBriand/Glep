@@ -14,10 +14,11 @@
     #include <vector>
     #include <optional>
 
-    #include <Model/Vertex.hpp>
     #include <Transform.hpp>
     #include <IDrawable.hpp>
+    #include <Model/Vertex.hpp>
     #include <Graphics/Texture.hpp>
+    #include <Graphics/Material.hpp>
     #include <GraphicsPipeline/GraphicsPipeline.hpp>
 
 namespace Glep
@@ -59,6 +60,7 @@ namespace Glep
             const unsigned int &getEBOId() const;
 
             void setTexture(const Texture &texture);
+            void setMaterial(const Material &material);
             void setDrawMode(const DrawMode &drawMode);
             void setDisplayMode(const DisplayMode &displayMode);
 
@@ -69,6 +71,7 @@ namespace Glep
             std::vector<unsigned int> _indices;
 
             std::optional<Texture> _texture = std::nullopt;
+            std::optional<Material> _material = std::nullopt;
 
             unsigned int _VAOId;
             unsigned int _VBOId;

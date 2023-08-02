@@ -86,14 +86,18 @@ namespace Glep
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBOId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int),
             _indices.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
+        // Position Location 0
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *)0);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-            (void *)(3 * sizeof(float)));
+        // UV Location 1
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *)(3 * sizeof(float)));
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-            (void *)(6 * sizeof(float)));
+        // Normal Location 2
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *)(5 * sizeof(float)));
         glEnableVertexAttribArray(2);
+        // Color Location 3
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void *)(8 * sizeof(float)));
+        glEnableVertexAttribArray(3);
     }
 
     void Mesh::setDrawMode(const DrawMode &drawMode)
@@ -111,16 +115,24 @@ namespace Glep
         _texture = texture;
     }
 
+    void Mesh::setMaterial(const Material &material)
+    {
+        _material = material;
+    }
+
     void Mesh::_addVertex(const Vertex &vertex)
     {
         _vertices.push_back(vertex.position.x);
         _vertices.push_back(vertex.position.y);
         _vertices.push_back(vertex.position.z);
+        _vertices.push_back(vertex.uv.x);
+        _vertices.push_back(vertex.uv.y);
+        _vertices.push_back(vertex.normal.x);
+        _vertices.push_back(vertex.normal.y);
+        _vertices.push_back(vertex.normal.z);
         _vertices.push_back(vertex.color.r);
         _vertices.push_back(vertex.color.g);
         _vertices.push_back(vertex.color.b);
-        _vertices.push_back(vertex.uv.x);
-        _vertices.push_back(vertex.uv.y);
     }
 
     void Mesh::draw(const GraphicsPipeline &pipeline) const
@@ -128,6 +140,13 @@ namespace Glep
         pipeline.setUniform("model", getTransformationMatrix());
         if (_texture.has_value()) {
             _texture.value().use();
+        }
+        if (_material.has_value()) {
+            auto matval = _material.value();
+            pipeline.setUniform("material.ambient", matval.getAmbientColor());
+            pipeline.setUniform("material.diffuse", matval.getDiffuseColor());
+            pipeline.setUniform("material.specular", matval.getSpecularColor());
+            pipeline.setUniform("material.shininess", matval.getShininess());
         }
         glBindVertexArray(_VAOId);
         glPolygonMode(GL_FRONT_AND_BACK, _displayMode);
