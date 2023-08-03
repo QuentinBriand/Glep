@@ -11,6 +11,7 @@
     #include <glad/glad.h>
     #include <GLFW/glfw3.h>
 
+    #include <iostream>
     #include <stdexcept>
 
     #ifndef STB_IMAGE_IMPLEMENTATION
